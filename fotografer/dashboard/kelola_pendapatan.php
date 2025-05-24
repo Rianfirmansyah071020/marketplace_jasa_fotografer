@@ -1,5 +1,20 @@
 <!-- [Head] end -->
+<?php
 
+include 'database/database.php';
+
+session_start();
+
+if (!isset($_SESSION['id_pengguna'])) {
+    header("location: login.php");
+}
+
+$queryPendapatan = "SELECT * FROM pendapatan INNER JOIN transaksi ON pendapatan.id_transaksi = transaksi.id_transaksi";
+$resultPendapatan = mysqli_query($conn, $queryPendapatan);
+$dataPendapatan = mysqli_fetch_all($resultPendapatan, MYSQLI_ASSOC);
+
+
+?>
 <?php
 include 'layouts/links.php';
 ?>

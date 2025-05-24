@@ -1,5 +1,24 @@
 <?php
 
+session_start();
+
+include "dashboard/database/database.php";
+
+$queryKategori = "SELECT * FROM kategori";
+$resultKategori = mysqli_query($conn, $queryKategori);
+$dataKategori = mysqli_fetch_all($resultKategori, MYSQLI_ASSOC);
+
+
+$queryJasa = "SELECT * FROM jasa INNER JOIN kategori ON jasa.id_kategori = kategori.id_kategori";
+$resultJasa = mysqli_query($conn, $queryJasa);
+$dataJasa = mysqli_fetch_all($resultJasa, MYSQLI_ASSOC);
+
+
+?>
+
+
+<?php
+
 include 'layouts/head.php';
 
 ?>
@@ -184,136 +203,19 @@ include 'layouts/head.php';
 
                     <div class="category-carousel swiper">
                         <div class="swiper-wrapper">
-                            <a href="#" class="nav-link category-item swiper-slide">
-                                <img src="assets/images/fotografer/photo-4328416_1280-removebg-preview.png"
-                                    alt="Category Thumbnail" style="width: 100px;">
-                                <h3 class="category-title">Wedding Photography</h3>
-                            </a>
-                            <a href="#" class="nav-link category-item swiper-slide">
-                                <img src="assets/images/fotografer/photo-4328416_1280-removebg-preview.png"
-                                    alt="Category Thumbnail" style="width: 100px;">
-                                <h3 class="category-title">Portrait Photography</h3>
-                            </a>
-                            <a href="#" class="nav-link category-item swiper-slide">
-                                <img src="assets/images/fotografer/photo-4328416_1280-removebg-preview.png"
-                                    alt="Category Thumbnail" style="width: 100px;">
-                                <h3 class="category-title">Commercial Photography</h3>
-                            </a>
-                            <a href="#" class="nav-link category-item swiper-slide">
-                                <img src="assets/images/fotografer/photo-4328416_1280-removebg-preview.png"
-                                    alt="Category Thumbnail" style="width: 100px;">
-                                <h3 class="category-title">Fashion Photography</h3>
-                            </a>
-                            <a href="#" class="nav-link category-item swiper-slide">
-                                <img src="assets/images/fotografer/photo-4328416_1280-removebg-preview.png"
-                                    alt="Category Thumbnail" style="width: 100px;">
-                                <h3 class="category-title">Event Photography</h3>
-                            </a>
-                            <a href="#" class="nav-link category-item swiper-slide">
-                                <img src="assets/images/fotografer/photo-4328416_1280-removebg-preview.png"
-                                    alt="Category Thumbnail" style="width: 100px;">
-                                <h3 class="category-title">andscape/Nature Photography</h3>
-                            </a>
-                        </div>
-                    </div>
+                            <?php
 
-                </div>
-            </div>
-        </div>
-    </section>
+                            foreach ($dataKategori as $key => $kategori) {
+                            ?>
+                                <a href="#" class="nav-link category-item swiper-slide">
+                                    <img src="dashboard/<?= $kategori['gambar_kategori'] ?>" alt="Category Thumbnail"
+                                        style="width: 100px;">
+                                    <h3 class="category-title"><?= $kategori['nama_kategori'] ?></h3>
+                                </a>
+                            <?php
+                            }
 
-
-    <section class="py-5 overflow-hidden">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-
-                    <div class="section-header d-flex flex-wrap flex-wrap justify-content-between mb-5">
-
-                        <h2 class="section-title">Layanan Terbaru</h2>
-
-                        <div class="d-flex align-items-center">
-                            <a href="#" class="btn-link text-decoration-none">Lihat semua layanan →</a>
-                            <div class="swiper-buttons">
-                                <button class="swiper-prev brand-carousel-prev btn btn-yellow">❮</button>
-                                <button class="swiper-next brand-carousel-next btn btn-yellow">❯</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-
-                    <div class="brand-carousel swiper">
-                        <div class="swiper-wrapper">
-
-                            <div class="swiper-slide">
-                                <div class="card mb-3 p-3 rounded-4 shadow border-0">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="assets/images/fotografer/wedding-4297343_1280.jpg"
-                                                class="img-fluid rounded" alt="Card title">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body py-0">
-                                                <p class="text-muted mb-0">Anton Jani</p>
-                                                <h5 class="card-title">Foto wedding tepi pantai</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card mb-3 p-3 rounded-4 shadow border-0">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="assets/images/fotografer/malaysian-tiger-8363779_1280.jpg"
-                                                class="img-fluid rounded" alt="Card title">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body py-0">
-                                                <p class="text-muted mb-0">Hery tanjung</p>
-                                                <h5 class="card-title">Foto estetik hewan</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card mb-3 p-3 rounded-4 shadow border-0">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="assets/images/fotografer/girl-4722398_1280.jpg"
-                                                class="img-fluid rounded" alt="Card title">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body py-0">
-                                                <p class="text-muted mb-0">Jeny anggara</p>
-                                                <h5 class="card-title">Foto estetik dialam</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card mb-3 p-3 rounded-4 shadow border-0">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="assets/images/fotografer/newborn-6405300_1280.jpg"
-                                                class="img-fluid rounded" alt="Card title">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body py-0">
-                                                <p class="text-muted mb-0">Yusuf Hidayat</p>
-                                                <h5 class="card-title">Foto estetik bayi</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            ?>
                         </div>
                     </div>
 
@@ -346,373 +248,41 @@ include 'layouts/head.php';
                                 <div
                                     class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 
-                                    <div class="col">
-                                        <div class="product-item">
-                                            <span class="badge bg-success position-absolute m-3">-30%</span>
-                                            <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                                                    <use xlink:href="#heart"></use>
-                                                </svg></a>
-                                            <figure>
-                                                <a href="#" title="Product Title">
-                                                    <img src="assets/images/fotografer/contaflex-1680421_1280.jpg"
-                                                        class="tab-image">
-                                                </a>
-                                            </figure>
-                                            <h3>Foto dengan camera kualitas terbaik</h3>
-                                            <span class="rating"><svg width="24" height="24" class="text-primary">
-                                                    <use xlink:href="#star-solid"></use>
-                                                </svg> 4.5</span>
-                                            <span class="price">Rp. 150,000</span>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="input-group product-qty">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-left-minus btn btn-danger btn-number"
-                                                            data-type="minus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#minus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                    <input type="text" id="quantity" name="quantity"
-                                                        class="form-control input-number" value="1">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-right-plus btn btn-success btn-number"
-                                                            data-type="plus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#plus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                                <a href="#" class="nav-link">Add to Cart <iconify-icon
-                                                        icon="uil:shopping-cart"></a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <?php
 
-                                    <div class="col">
-                                        <div class="product-item">
-                                            <span class="badge bg-success position-absolute m-3">-30%</span>
-                                            <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                                                    <use xlink:href="#heart"></use>
-                                                </svg></a>
-                                            <figure>
-                                                <a href="#" title="Product Title">
-                                                    <img src="assets/images/fotografer/newborn-6405300_1280.jpg"
-                                                        class="tab-image">
-                                                </a>
-                                            </figure>
-                                            <h3>Foto estetik bayi</h3>
-                                            <span class="rating"><svg width="24" height="24" class="text-primary">
-                                                    <use xlink:href="#star-solid"></use>
-                                                </svg> 4.5</span>
-                                            <span class="price">Rp. 120,000</span>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="input-group product-qty">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-left-minus btn btn-danger btn-number"
-                                                            data-type="minus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#minus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                    <input type="text" id="quantity" name="quantity"
-                                                        class="form-control input-number" value="1">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-right-plus btn btn-success btn-number"
-                                                            data-type="plus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#plus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                                <a href="#" class="nav-link">Add to Cart <iconify-icon
-                                                        icon="uil:shopping-cart"></a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    foreach ($dataJasa as $key => $jasa) { ?>
 
-                                    <div class="col">
-                                        <div class="product-item">
-                                            <span class="badge bg-success position-absolute m-3">-30%</span>
-                                            <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                                                    <use xlink:href="#heart"></use>
-                                                </svg></a>
-                                            <figure>
-                                                <a href="#" title="Product Title">
-                                                    <img src="assets/images/fotografer/wedding-4297343_1280.jpg"
-                                                        class="tab-image">
-                                                </a>
-                                            </figure>
-                                            <h3>Foto wedding dengan pasangan</h3>
-                                            <span class="rating"><svg width="24" height="24" class="text-primary">
-                                                    <use xlink:href="#star-solid"></use>
-                                                </svg> 4.5</span>
-                                            <span class="price">Rp. 500,000</span>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="input-group product-qty">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-left-minus btn btn-danger btn-number"
-                                                            data-type="minus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#minus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                    <input type="text" id="quantity" name="quantity"
-                                                        class="form-control input-number" value="1">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-right-plus btn btn-success btn-number"
-                                                            data-type="plus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#plus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                                <a href="#" class="nav-link">Add to Cart <iconify-icon
-                                                        icon="uil:shopping-cart"></a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        <div class="col">
+                                            <div class="product-item">
+                                                <!-- <span class="badge bg-success position-absolute m-3">-30%</span> -->
+                                                <a href="#" class="btn-wishlist"><svg width="24" height="24">
+                                                        <use xlink:href="#heart"></use>
+                                                    </svg></a>
+                                                <figure>
+                                                    <a href="#" title="Product Title">
+                                                        <img src="dashboard/<?= $jasa['gambar_jasa'] ?>" class="tab-image">
+                                                    </a>
+                                                </figure>
+                                                <h3><?= $jasa['nama_jasa'] ?></h3>
+                                                <p style="font-size: small;"><?= $jasa['deskripsi_jasa'] ?></p>
+                                                <span class="price">Rp. <?= number_format($jasa['harga_jasa']) ?></span>
+                                                <div class="row d-flex align-items-center mt-4 justify-content-between">
+                                                    <?php
 
-                                    <div class="col">
-                                        <div class="product-item">
-                                            <span class="badge bg-success position-absolute m-3">-30%</span>
-                                            <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                                                    <use xlink:href="#heart"></use>
-                                                </svg></a>
-                                            <figure>
-                                                <a href="#" title="Product Title">
-                                                    <img src="assets/images/fotografer/baikal-2620806_1280.jpg"
-                                                        class="tab-image">
-                                                </a>
-                                            </figure>
-                                            <h3>Foto pertualangan dialam</h3>
-                                            <span class="rating"><svg width="24" height="24" class="text-primary">
-                                                    <use xlink:href="#star-solid"></use>
-                                                </svg> 4.5</span>
-                                            <span class="price">Rp. 600,000</span>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="input-group product-qty">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-left-minus btn btn-danger btn-number"
-                                                            data-type="minus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#minus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                    <input type="text" id="quantity" name="quantity"
-                                                        class="form-control input-number" value="1">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-right-plus btn btn-success btn-number"
-                                                            data-type="plus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#plus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
+                                                    if ($_SESSION['id_pengguna']) { ?>
+                                                        <a href="checkout.php?id_jasa=<?= $jasa['id_jasa'] ?>"
+                                                            class=" btn btn-sm btn-primary">Checkout <iconify-icon
+                                                                icon="uil:shopping-cart">
+                                                        </a>
+                                                    <?php   } else { ?>
+                                                        <a href="dashboard/login.php" class=" btn btn-sm btn-primary">Silahkan
+                                                            login
+                                                            dahulu</a>
+                                                    <?php } ?>
                                                 </div>
-                                                <a href="#" class="nav-link">Add to Cart <iconify-icon
-                                                        icon="uil:shopping-cart"></a>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="col">
-                                        <div class="product-item">
-                                            <span class="badge bg-success position-absolute m-3">-30%</span>
-                                            <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                                                    <use xlink:href="#heart"></use>
-                                                </svg></a>
-                                            <figure>
-                                                <a href="#" title="Product Title">
-                                                    <img src="assets/images/fotografer/contaflex-1680421_1280.jpg"
-                                                        class="tab-image">
-                                                </a>
-                                            </figure>
-                                            <h3>Foto dengan camera kualitas terbaik</h3>
-                                            <span class="rating"><svg width="24" height="24" class="text-primary">
-                                                    <use xlink:href="#star-solid"></use>
-                                                </svg> 4.5</span>
-                                            <span class="price">Rp. 150,000</span>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="input-group product-qty">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-left-minus btn btn-danger btn-number"
-                                                            data-type="minus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#minus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                    <input type="text" id="quantity" name="quantity"
-                                                        class="form-control input-number" value="1">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-right-plus btn btn-success btn-number"
-                                                            data-type="plus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#plus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                                <a href="#" class="nav-link">Add to Cart <iconify-icon
-                                                        icon="uil:shopping-cart"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col">
-                                        <div class="product-item">
-                                            <span class="badge bg-success position-absolute m-3">-30%</span>
-                                            <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                                                    <use xlink:href="#heart"></use>
-                                                </svg></a>
-                                            <figure>
-                                                <a href="#" title="Product Title">
-                                                    <img src="assets/images/fotografer/newborn-6405300_1280.jpg"
-                                                        class="tab-image">
-                                                </a>
-                                            </figure>
-                                            <h3>Foto estetik bayi</h3>
-                                            <span class="rating"><svg width="24" height="24" class="text-primary">
-                                                    <use xlink:href="#star-solid"></use>
-                                                </svg> 4.5</span>
-                                            <span class="price">Rp. 120,000</span>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="input-group product-qty">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-left-minus btn btn-danger btn-number"
-                                                            data-type="minus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#minus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                    <input type="text" id="quantity" name="quantity"
-                                                        class="form-control input-number" value="1">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-right-plus btn btn-success btn-number"
-                                                            data-type="plus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#plus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                                <a href="#" class="nav-link">Add to Cart <iconify-icon
-                                                        icon="uil:shopping-cart"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col">
-                                        <div class="product-item">
-                                            <span class="badge bg-success position-absolute m-3">-30%</span>
-                                            <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                                                    <use xlink:href="#heart"></use>
-                                                </svg></a>
-                                            <figure>
-                                                <a href="#" title="Product Title">
-                                                    <img src="assets/images/fotografer/wedding-4297343_1280.jpg"
-                                                        class="tab-image">
-                                                </a>
-                                            </figure>
-                                            <h3>Foto wedding dengan pasangan</h3>
-                                            <span class="rating"><svg width="24" height="24" class="text-primary">
-                                                    <use xlink:href="#star-solid"></use>
-                                                </svg> 4.5</span>
-                                            <span class="price">Rp. 500,000</span>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="input-group product-qty">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-left-minus btn btn-danger btn-number"
-                                                            data-type="minus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#minus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                    <input type="text" id="quantity" name="quantity"
-                                                        class="form-control input-number" value="1">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-right-plus btn btn-success btn-number"
-                                                            data-type="plus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#plus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                                <a href="#" class="nav-link">Add to Cart <iconify-icon
-                                                        icon="uil:shopping-cart"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col">
-                                        <div class="product-item">
-                                            <span class="badge bg-success position-absolute m-3">-30%</span>
-                                            <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                                                    <use xlink:href="#heart"></use>
-                                                </svg></a>
-                                            <figure>
-                                                <a href="#" title="Product Title">
-                                                    <img src="assets/images/fotografer/baikal-2620806_1280.jpg"
-                                                        class="tab-image">
-                                                </a>
-                                            </figure>
-                                            <h3>Foto pertualangan dialam</h3>
-                                            <span class="rating"><svg width="24" height="24" class="text-primary">
-                                                    <use xlink:href="#star-solid"></use>
-                                                </svg> 4.5</span>
-                                            <span class="price">Rp. 600,000</span>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="input-group product-qty">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-left-minus btn btn-danger btn-number"
-                                                            data-type="minus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#minus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                    <input type="text" id="quantity" name="quantity"
-                                                        class="form-control input-number" value="1">
-                                                    <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-right-plus btn btn-success btn-number"
-                                                            data-type="plus">
-                                                            <svg width="16" height="16">
-                                                                <use xlink:href="#plus"></use>
-                                                            </svg>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                                <a href="#" class="nav-link">Add to Cart <iconify-icon
-                                                        icon="uil:shopping-cart"></a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <?php  } ?>
 
                                 </div>
                                 <!-- / product-grid -->

@@ -1,5 +1,4 @@
 <!-- [Head] end -->
-<!-- [Head] end -->
 <?php
 
 session_start();
@@ -8,28 +7,26 @@ if (!isset($_SESSION['id_pengguna'])) {
     header("location: login.php");
 }
 
+if ($_SESSION['level_pengguna'] == 'penjual') {
+    header("location: index.php");
+}
+
 
 ?>
 <?php
 
 include 'database/database.php';
 
-session_start();
-$id_pengguna = $_SESSION['id_pengguna'];
+if (isset($_POST['tambah_kategori'])) {
+    $nama_kategori = $_POST['nama_kategori'];
+    $deskripsi_kategori = $_POST['deskripsi_kategori'];
 
-if (isset($_POST['tambah_jasa'])) {
-    $nama_jasa = $_POST['nama_jasa'];
-    $id_kategori = $_POST['id_kategori'];
-    $deskripsi_jasa = $_POST['deskripsi_jasa'];
-    $harga_jasa = $_POST['harga_jasa'];
+    $gambar_kategori_ori = $_FILES['gambar_kategori']['name'];
+    $tmp_gambar_kategori = $_FILES['gambar_kategori']['tmp_name'];
+    move_uploaded_file($tmp_gambar_kategori, "assets/img/kategori/$gambar_kategori_ori");
+    $gambar_kategori = "assets/img/kategori/$gambar_kategori_ori";
 
-    $gambar_jasa_ori = $_FILES['gambar_jasa']['name'];
-    $tmp_gambar_jasa = $_FILES['gambar_jasa']['tmp_name'];
-    move_uploaded_file($tmp_gambar_jasa, "assets/img/jasa/$gambar_jasa_ori");
-    $gambar_jasa = "assets/img/jasa/$gambar_jasa_ori";
-
-
-    $query = "INSERT INTO jasa (id_pengguna , id_kategori, nama_jasa, deskripsi_jasa, harga_jasa, gambar_jasa) VALUES ('$id_pengguna', '$id_kategori', '$nama_jasa', '$deskripsi_jasa', '$harga_jasa', '$gambar_jasa')";
+    $query = "INSERT INTO kategori (nama_kategori, deskripsi_kategori, gambar_kategori) VALUES ('$nama_kategori', '$deskripsi_kategori', '$gambar_kategori')";
     $result = mysqli_query($conn, $query);
 
     if ($result) {
@@ -49,25 +46,23 @@ if (isset($_POST['tambah_jasa'])) {
     }
 }
 
-if (isset($_POST['edit_jasa'])) {
-    $id_jasa = $_POST['id_jasa'];
+if (isset($_POST['edit_kategori'])) {
     $id_kategori = $_POST['id_kategori'];
-    $nama_jasa = $_POST['nama_jasa'];
-    $harga_jasa = $_POST['harga_jasa'];
-    $deskripsi_jasa = $_POST['deskripsi_jasa'];
+    $nama_kategori = $_POST['nama_kategori'];
+    $deskripsi_kategori = $_POST['deskripsi_kategori'];
 
-    if ($_FILES['gambar_jasa']['name'] !== "") {
-        $gambar_jasa_ori = $_FILES['gambar_jasa']['name'];
-        $tmp_gambar_jasa = $_FILES['gambar_jasa']['tmp_name'];
-        move_uploaded_file($tmp_gambar_jasa, "assets/img/jasa/$gambar_jasa_ori");
-        $gambar_jasa = "assets/img/jasa/$gambar_jasa_ori";
+    if ($_FILES['gambar_kategori']['name'] !== "") {
+        $gambar_kategori_ori = $_FILES['gambar_kategori']['name'];
+        $tmp_gambar_kategori = $_FILES['gambar_kategori']['tmp_name'];
+        move_uploaded_file($tmp_gambar_kategori, "assets/img/kategori/$gambar_kategori_ori");
+        $gambar_kategori = "assets/img/kategori/$gambar_kategori_ori";
     } else {
-        $gambar_jasa = $_POST['gambar_jasa_lama'];
+        $gambar_kategori = $_POST['gambar_kategori_lama'];
     }
 
 
 
-    $query = "UPDATE jasa SET id_kategori = '$id_kategori', nama_jasa = '$nama_jasa', harga_jasa = '$harga_jasa', deskripsi_jasa = '$deskripsi_jasa', gambar_jasa = '$gambar_jasa' WHERE id_jasa = '$id_jasa'";
+    $query = "UPDATE kategori SET nama_kategori = '$nama_kategori', deskripsi_kategori = '$deskripsi_kategori', gambar_kategori = '$gambar_kategori' WHERE id_kategori = '$id_kategori'";
     $result = mysqli_query($conn, $query);
 
     if ($result) {
@@ -88,18 +83,10 @@ if (isset($_POST['edit_jasa'])) {
 }
 
 
-if ($_SESSION['level_pengguna'] == 'Penyedia Jasa') {
-
-    $queryJasa = mysqli_query($conn, "SELECT * FROM jasa LEFT JOIN kategori ON jasa.id_kategori = kategori.id_kategori LEFT JOIN pengguna ON jasa.id_pengguna = pengguna.id_pengguna WHERE jasa.id_pengguna = '$id_pengguna'");
-    $dataJasa = mysqli_fetch_all($queryJasa, MYSQLI_ASSOC);
-} else {
-    $queryJasa = mysqli_query($conn, "SELECT * FROM jasa LEFT JOIN kategori ON jasa.id_kategori = kategori.id_kategori LEFT JOIN pengguna ON jasa.id_pengguna = pengguna.id_pengguna");
-    $dataJasa = mysqli_fetch_all($queryJasa, MYSQLI_ASSOC);
-}
-
-
 $queryKategori = mysqli_query($conn, "SELECT * FROM kategori");
 $dataKategori = mysqli_fetch_all($queryKategori, MYSQLI_ASSOC);
+
+
 
 
 ?>
@@ -138,11 +125,11 @@ include 'layouts/links.php';
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">Kelola Jasa</h5>
+                                <h5 class="m-b-10">Kelola Kategori</h5>
                             </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                <li class="breadcrumb-item"><a href="kelola_jasa.php">Kelola Jasa</a></li>
+                                <li class="breadcrumb-item"><a href="kelola_kategori.php">Kelola Kategori</a></li>
                             </ul>
                         </div>
                     </div>
@@ -150,8 +137,8 @@ include 'layouts/links.php';
             </div>
             <div class="mt-2">
                 <?php
-                include 'componentsDataJasa/modalTambahDataJasa.php';
-                include 'componentsDataJasa/tableDataJasa.php';
+                include 'componentsDataKategori/modalTambahDataKategori.php';
+                include 'componentsDataKategori/tableDataKategori.php';
                 ?>
 
             </div>

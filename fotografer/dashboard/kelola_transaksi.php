@@ -1,4 +1,32 @@
 <!-- [Head] end -->
+<?php
+
+session_start();
+
+if (!isset($_SESSION['id_pengguna'])) {
+    header("location: login.php");
+}
+
+?>
+
+
+<?php
+
+include 'database/database.php';
+
+if ($_SESSION['level_pengguna'] == 'Penyedia Jasa') {
+    $queryTransaksi = "SELECT * FROM transaksi LEFT JOIN jasa ON transaksi.id_jasa = jasa.id_jasa LEFT JOIN pengguna ON transaksi.id_pengguna = pengguna.id_pengguna LEFT JOIN kategori ON jasa.id_kategori = kategori.id_kategori WHERE jasa.id_pengguna = '$_SESSION[id_pengguna]'";
+} else {
+    $queryTransaksi = "SELECT * FROM transaksi LEFT JOIN jasa ON transaksi.id_jasa = jasa.id_jasa LEFT JOIN pengguna ON transaksi.id_pengguna = pengguna.id_pengguna LEFT JOIN kategori ON jasa.id_kategori = kategori.id_kategori";
+}
+
+$resultTransaksi = mysqli_query($conn, $queryTransaksi);
+$dataTransaksi = mysqli_fetch_all($resultTransaksi, MYSQLI_ASSOC);
+
+
+
+?>
+
 
 <?php
 include 'layouts/links.php';

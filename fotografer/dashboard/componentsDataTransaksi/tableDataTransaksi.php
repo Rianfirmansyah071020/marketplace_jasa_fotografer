@@ -3,40 +3,48 @@
         <thead>
             <tr>
                 <th class="text-center">No</th>
+                <th class="text-center">Kode</th>
                 <th class="text-center">Pemesan</th>
                 <th class="text-center">Nama Jasa</th>
                 <th class="text-center">Deskripsi</th>
+                <th class="text-center">Tanggal</th>
+                <th class="text-center">Catatan</th>
                 <th class="text-center">Harga</th>
                 <th class="text-center">Total Bayar</th>
+                <th class="text-center">Potongan</th>
                 <th class="text-center">Bukti Transaksi</th>
-                <th class="text-center">Aksi</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td class="text-center">1</td>
-                <td class="text-center">Nagita</td>
-                <td class="">Foto dengan camera kualitas terbaik</td>
-                <td class="">Mengambil foto dengan kamera yang memiliki kualitas tinggi</td>
-                <td class="">Rp. 150,000</td>
-                <td class="">Rp. 150,000</td>
-                <td class="">
-                    <img src="assets/images/img-navbar-card.png" alt="images" class="img-fluid mb-2"
-                        style="width: 100px;">
-                </td>
-                <td class="text-center">
-                    <a href="" class="btn btn-sm btn-primary">Proses</a>
-                    <a href="" class="btn btn-sm btn-danger">Tolak</a>
-                </td>
-            </tr>
+            <?php
+
+            foreach ($dataTransaksi as $key => $value) {
+            ?>
+                <tr>
+                    <td class="text-center"><?= $key + 1; ?></td>
+                    <td class="text-center"><?= $value['kode_transaksi']; ?></td>
+                    <td class="text-center"><?= $value['nama_pengguna']; ?></td>
+                    <td class="text-center"><?= $value['nama_jasa']; ?></td>
+                    <td class="text-center"><?= $value['deskripsi_jasa']; ?></td>
+                    <td class="text-center"><?= $value['tanggal_transaksi']; ?></td>
+                    <td class="text-center"><?= $value['catatan']; ?></td>
+                    <td class="text-center">Rp. <?= number_format($value['harga_jasa']); ?></td>
+                    <td class="text-center">Rp. <?= number_format($value['total_bayar_transaksi']); ?></td>
+                    <td class="text-center">Rp. <?= number_format($value['potongan_transaksi']); ?></td>
+                    <td class="text-center">
+                        <img src="<?= $value['bukti_bayar_transaksi']; ?>" alt="images" class="img-fluid mb-2"
+                            style="width: 100px;">
+                    </td>
+
+                <?php }  ?>
         </tbody>
     </table>
 </div>
 
 
 <script>
-$(document).ready(function() {
-    $('#dataTableDataTransaksi').DataTable();
-    // alert('test');
-});
+    $(document).ready(function() {
+        $('#dataTableDataTransaksi').DataTable();
+        // alert('test');
+    });
 </script>

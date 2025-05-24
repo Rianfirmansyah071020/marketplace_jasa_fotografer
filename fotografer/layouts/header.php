@@ -4,14 +4,31 @@
 
             <div class="col-sm-4 col-lg-3 text-center text-sm-start">
                 <div class="main-logo">
-                    <a href="daftar-jasa.php" class="btn btn-sm btn-dark p-2">
-                        Daftarkan jasa anda
-                    </a>
-                    <a href="dashboard/index.php" class="btn text-white btn-sm btn-info p-2">
-                        dashboard
-                    </a>
-                    <a href="dashboard/login.php" class="btn btn-sm btn-primary p-2">
-                        login
+                    <?php
+
+                    if (!isset($_SESSION['id_pengguna'])) { ?>
+                        <a href="daftar-akun.php" class="btn btn-sm btn-dark p-2 m-2">
+                            Buat akun anda
+                        </a>
+                        <a href="dashboard/login.php" class="btn btn-sm btn-primary p-2 m-2">
+                            login
+                        </a>
+                    <?php   }
+
+                    ?>
+
+                    <?php
+
+                    if (isset($_SESSION['id_pengguna'])) { ?>
+                        <a href="dashboard/logout.php" onclick="return confirm('Yakin ingin logout?')"
+                            class="btn btn-sm btn-danger p-2 m-2">
+                            logout
+                        </a>
+                    <?php   }
+
+                    ?>
+                    <a href="petunjuk.php" class="btn btn-sm btn-info p-2 m-2">
+                        Petunjuk Penggunaan Aplikasi
                     </a>
                 </div>
             </div>
@@ -21,13 +38,13 @@
                     <div class="col-md-4 d-none d-md-block">
                         <select class="form-select border-0 bg-transparent">
                             <option>All Categories</option>
-                            <option>Wedding Photography</option>
-                            <option>Portrait Photography</option>
-                            <option>Commercial Photography</option>
-                            <option>Fashion Photography</option>
-                            <option>Event Photography</option>
-                            <option>Landscape/Nature Photography</option>
-                            <option>Documentary Photography</option>
+                            <?php
+                            foreach ($dataKategori as $key => $kategori) {
+                            ?>
+                                <option value="<?= $kategori['id_kategori'] ?>"><?= $kategori['nama_kategori'] ?></option>
+                            <?php
+                            }
+                            ?>
                         </select>
                     </div>
                     <div class="col-11 col-md-7">
@@ -48,7 +65,7 @@
             <div
                 class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
                 <div class="support-box text-end d-none d-xl-block">
-                    <span class="fs-6 text-muted">For Support?</span>
+                    <span class="fs-6 text-muted"><?= $_SESSION['nama_pengguna'] ?></span>
                     <h5 class="mb-0">+980-34984089</h5>
                 </div>
 
@@ -118,13 +135,17 @@
 
                             <select class="filter-categories border-0 mb-0 me-5">
                                 <option>All Categories</option>
-                                <option>Wedding Photography</option>
-                                <option>Portrait Photography</option>
-                                <option>Commercial Photography</option>
-                                <option>Fashion Photography</option>
-                                <option>Event Photography</option>
-                                <option>Landscape/Nature Photography</option>
-                                <option>Documentary Photography</option>
+
+                                <option>All Categories</option>
+                                <?php
+                                foreach ($dataKategori as $key => $kategori) {
+                                ?>
+                                    <option value="<?= $kategori['id_kategori'] ?>"><?= $kategori['nama_kategori'] ?>
+                                    </option>
+                                <?php
+                                }
+                                ?>
+
                             </select>
                         </div>
 

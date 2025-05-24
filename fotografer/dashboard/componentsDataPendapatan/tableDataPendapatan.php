@@ -3,29 +3,24 @@
         <thead>
             <tr>
                 <th class="text-center">No</th>
-                <th class="text-center">Pemesan</th>
-                <th class="text-center">Nama Jasa</th>
-                <th class="text-center">Deskripsi</th>
-                <th class="text-center">Harga</th>
-                <th class="text-center">Total Bayar</th>
-                <th class="text-center">Bukti Transaksi</th>
-                <th class="text-center">Persentase Pendapatan</th>
+                <th class="text-center">Kode Transaksi</th>
+                <th class="text-center">Pendapatan</th>
             </tr>
         </thead>
         <tbody>
+            <?php
+
+            foreach ($dataPendapatan as $key => $value) {
+            ?>
             <tr>
-                <td class="text-center">1</td>
-                <td class="text-center">Nagita</td>
-                <td class="">Foto dengan camera kualitas terbaik</td>
-                <td class="">Mengambil foto dengan kamera yang memiliki kualitas tinggi</td>
-                <td class="">Rp. 150,000</td>
-                <td class="">Rp. 150,000</td>
-                <td class="">
-                    <img src="assets/images/img-navbar-card.png" alt="images" class="img-fluid mb-2"
-                        style="width: 100px;">
-                </td>
-                <td class="">10% (Rp. 15,000)</td>
+                <td class="text-center"><?= $key + 1 ?></td>
+                <td class="text-center"><a href="kelola_transaksi.php"
+                        class="text-decoration-none"><?= $value['kode_transaksi'] ?></a></td>
+                <td class="text-center">Rp. <?= number_format($value['total_pendapatan']) ?></td>
             </tr>
+            <?php
+            }
+            ?>
         </tbody>
     </table>
 </div>
